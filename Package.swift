@@ -9,7 +9,10 @@ let package = Package(
         // Products define the executables and libraries a package produces, and make them visible to other packages.
         .library(
             name: "CloudTips-SDK-iOS",
-            targets: ["CloudTips-SDK-iOS"]),
+            targets: [
+//                "CloudTips-SDK-iOS"
+                "CloudaymentsNetworking",
+            ]),
     ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
@@ -20,5 +23,7 @@ let package = Package(
             name: "CloudTips-SDK-iOS",
             dependencies: [],
             path: "sdk/Sources"),
+        .target(name: "CloudaymentsNetworking",
+                path: "sdk/Pods/CloudpaymentsNetworking")
     ]
 )
