@@ -1,4 +1,4 @@
-// swift-tools-version: 5.7
+// swift-tools-version: 5.4.2
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
 import PackageDescription
@@ -39,6 +39,4 @@ let package = Package(
                       path: "sdk/YandexPaySDK/Static/YandexPaySDK.xcframework"),
         .binaryTarget(name: "XPlatPaySDK",
                       path: "sdk/YandexPaySDK/Static/XPlatPaySDK.xcframework"),
-    ],
-    swiftLanguageVersions: [.v5]
 )
