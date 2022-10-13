@@ -10,20 +10,25 @@ let package = Package(
         .library(
             name: "CloudTips-SDK-iOS",
             targets: [
-//                "CloudTips-SDK-iOS"
-                "CloudaymentsNetworking",
+                "Cloudpayments",
+                "CloudpaymentsNetworking",
             ]),
     ],
     dependencies: [
-        // Dependencies declare other packages that this package depends on.
-        // .package(url: /* package url */, from: "1.0.0"),
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.1.0")
     ],
     targets: [
         .target(
-            name: "CloudTips-SDK-iOS",
-            dependencies: [],
+            name: "Cloudpayments",
+            dependencies: [
+                "CloudpaymentsNetworking",
+                "ReCaptcha",
+                "SDWebImage",
+            ],
             path: "sdk/Sources"),
-        .target(name: "CloudaymentsNetworking",
-                path: "sdk/Pods/CloudpaymentsNetworking")
+        .target(name: "CloudpaymentsNetworking",
+                path: "sdk/Pods/CloudpaymentsNetworking"),
+        .target(name: "ReCaptcha",
+                path: "sdk/Pods/ReCaptcha/ReCaptcha"),
     ]
 )
