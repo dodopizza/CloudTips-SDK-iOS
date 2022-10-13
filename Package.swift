@@ -12,10 +12,12 @@ let package = Package(
             targets: [
                 "Cloudpayments",
                 "CloudpaymentsNetworking",
+                
             ]),
     ],
     dependencies: [
-        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.1.0")
+        .package(url: "https://github.com/SDWebImage/SDWebImage.git", from: "5.1.0"),
+        .package(url: "git@github.com:mxcl/PromiseKit.git", from: "6.18.1"),
     ],
     targets: [
         .target(
@@ -24,11 +26,19 @@ let package = Package(
                 "CloudpaymentsNetworking",
                 "ReCaptcha",
                 "SDWebImage",
+                "PromiseKit",
+                "YandexPaySDK",
+                "XPlatPaySDK",
             ],
             path: "sdk/Sources"),
         .target(name: "CloudpaymentsNetworking",
                 path: "sdk/Pods/CloudpaymentsNetworking"),
         .target(name: "ReCaptcha",
                 path: "sdk/Pods/ReCaptcha/ReCaptcha"),
-    ]
+        .binaryTarget(name: "YandexPaySDK",
+                      path: "sdk/YandexPaySDK/Static/YandexPaySDK.xcframework"),
+        .binaryTarget(name: "XPlatPaySDK",
+                      path: "sdk/YandexPaySDK/Static/XPlatPaySDK.xcframework"),
+    ],
+    swiftLanguageVersions: [.v5]
 )
