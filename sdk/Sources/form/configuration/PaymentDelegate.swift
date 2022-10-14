@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 protocol PaymentDelegate {
     func getPublicId(with layoutId: String, completion: @escaping (_ publicId: String?, _ error: Error?) -> ())

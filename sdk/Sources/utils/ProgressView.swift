@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 class ProgressView: UIView {
     var bgColor: UIColor = .clear {

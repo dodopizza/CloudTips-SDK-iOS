@@ -7,6 +7,7 @@
 //
 
 import Foundation
+import UIKit
 
 public class BaseViewController: UIViewController {
     let api = CloudtipsApi.init()

@@ -7,6 +7,7 @@
 //
 
 import CloudpaymentsNetworking
+import Foundation
 
 class CloudtipsApi {
     private let defaultCardHolderName = "Cloudtips SDK"
