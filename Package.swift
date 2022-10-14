@@ -10,9 +10,9 @@ let package = Package(
         .library(
             name: "CloudTips-SDK-iOS",
             targets: [
-                "Cloudpayments",
-                "CloudpaymentsNetworking",
-                
+                "Cloudtips",
+//                "Cloudpayments",
+//                "CloudpaymentsNetworking",
             ]),
     ],
     dependencies: [
@@ -20,17 +20,23 @@ let package = Package(
         .package(url: "git@github.com:mxcl/PromiseKit.git", from: "6.18.1"),
     ],
     targets: [
-        .target(
-            name: "Cloudpayments",
-            dependencies: [
-                "CloudpaymentsNetworking",
-                "ReCaptcha",
-                "SDWebImage",
-                "PromiseKit",
-                "YandexPaySDK",
-                "XPlatPaySDK",
-            ],
-            path: "sdk/Sources"),
+        .target(name: "Cloudtips",
+                dependencies: [
+                    "Cloudpayments",
+                    "CloudpaymentsNetworking",
+                    "ReCaptcha",
+                    "SDWebImage",
+                    "PromiseKit",
+                    "YandexPaySDK",
+                    "XPlatPaySDK",
+                    "SnapKit"
+                ],
+                path: "sdk/Sources"),
+        .target(name: "Cloudpayments",
+                dependencies: [
+                    "CloudpaymentsNetworking",
+                ],
+                path: "sdk/Pods/Cloudpayments"),
         .target(name: "CloudpaymentsNetworking",
                 path: "sdk/Pods/CloudpaymentsNetworking"),
         .target(name: "ReCaptcha",
@@ -39,4 +45,7 @@ let package = Package(
                       path: "sdk/YandexPaySDK/Static/YandexPaySDK.xcframework"),
         .binaryTarget(name: "XPlatPaySDK",
                       path: "sdk/YandexPaySDK/Static/XPlatPaySDK.xcframework"),
+        .target(name: "SnapKit",
+                path: "sdk/Pods/Snapkit/Sources"),
+    ]
 )
