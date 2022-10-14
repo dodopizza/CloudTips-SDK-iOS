@@ -6,7 +6,7 @@
 //
 
 import Foundation
-import YandexPaySDK
+//import YandexPaySDK
 
 final public class CloudtipsSDK {
 
@@ -23,8 +23,8 @@ final public class CloudtipsSDK {
     public static func initialize(yandexPayAppId: String?, sandboxMode: Bool? = false) throws {
         Self.yandexPayAppId = yandexPayAppId
 
-        let configuration = YandexPaySDKConfiguration(environment: (sandboxMode ?? false) ? .sandbox : .production)
-        try YandexPaySDKApi.initialize(configuration: configuration)
+//        let configuration = YandexPaySDKConfiguration(environment: (sandboxMode ?? false) ? .sandbox : .production)
+//        try YandexPaySDKApi.initialize(configuration: configuration)
 
         initialized = true
     }
@@ -36,27 +36,27 @@ final public class CloudtipsSDK {
 
     final public func applicationWillEnterForeground() {
         if Self.yandexPayAppId != nil {
-            YandexPaySDKApi.instance.applicationWillEnterForeground()
+//            YandexPaySDKApi.instance.applicationWillEnterForeground()
         }
     }
 
     final public func applicationDidBecomeActive() {
         if Self.yandexPayAppId != nil {
-            YandexPaySDKApi.instance.applicationDidBecomeActive()
+//            YandexPaySDKApi.instance.applicationDidBecomeActive()
         }
     }
 
     final public func applicationDidReceiveOpen(_ url: URL, sourceApplication: String?) -> Bool {
-        if Self.yandexPayAppId != nil {
-            return YandexPaySDKApi.instance.applicationDidReceiveOpen(url, sourceApplication: sourceApplication)
-        }
+//        if Self.yandexPayAppId != nil {
+//            return YandexPaySDKApi.instance.applicationDidReceiveOpen(url, sourceApplication: sourceApplication)
+//        }
         return true
     }
 
     final public func applicationDidReceiveUserActivity(_ userActivity: NSUserActivity) -> Bool {
-        if Self.yandexPayAppId != nil {
-            return YandexPaySDKApi.instance.applicationDidReceiveUserActivity(userActivity)
-        }
+//        if Self.yandexPayAppId != nil {
+//            return YandexPaySDKApi.instance.applicationDidReceiveUserActivity(userActivity)
+//        }
         return true
     }
 }

@@ -29,6 +29,7 @@ let package = Package(
                     "PromiseKit",
                     "YandexPaySDK",
                     "XPlatPaySDK",
+//                    "YandexLoginSDK",
                     "SnapKit"
                 ],
                 path: "sdk/Sources"),
@@ -45,6 +46,18 @@ let package = Package(
                       path: "sdk/YandexPaySDK/Static/YandexPaySDK.xcframework"),
         .binaryTarget(name: "XPlatPaySDK",
                       path: "sdk/YandexPaySDK/Static/XPlatPaySDK.xcframework"),
+//        .target(name: "YandexLoginSDK",
+//                path: "sdk/Pods/YandexLoginSDK",
+//                cSettings: [
+//                    .headerSearchPath("lib/Classes/Private/Core"),
+//                    .headerSearchPath("lib/Classes/Private/Core/Executor"),
+//                    .headerSearchPath("lib/Classes/Private/Core/Storage"),
+//                    .headerSearchPath("lib/Classes/Private/Networking"),
+//                    .headerSearchPath("lib/Classes/Private/Networking/RequestParams"),
+//                    .headerSearchPath("lib/Classes/Private/Networking/ResponseParser"),
+//                    .headerSearchPath("lib/Classes/Public"),
+//                ]
+//               ),
         .target(name: "SnapKit",
                 path: "sdk/Pods/Snapkit/Sources"),
     ]

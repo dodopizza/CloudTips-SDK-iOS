@@ -10,7 +10,7 @@ import UIKit
 import SDWebImage
 import PassKit
 import WebKit
-import YandexPaySDK
+//import YandexPaySDK
 import SnapKit
 
 public class TipsViewController: BasePaymentViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout, WKNavigationDelegate {
@@ -44,23 +44,23 @@ public class TipsViewController: BasePaymentViewController, UICollectionViewDele
     @IBOutlet weak var feeFromPayerSwitch: UISwitch!
     @IBOutlet weak var feeFromPayerLabel: UILabel!
 
-    private lazy var yaPayButton: YandexPayButton = {
-            // Укажите тему для кнопки
-        let theme: YandexPayButtonTheme
-        if #available(iOS 13.0, *) {
-                // Параметр `dynamic` позволяет указать, нужно ли кнопке
-                // менять свою цветовую палитру вместе со сменой системной темы
-            theme = YandexPayButtonTheme(appearance: .dark, dynamic: true)
-        } else {
-            theme = YandexPayButtonTheme(appearance: .dark)
-        }
-
-            // Инициализируйте конфигурацию
-        let configuration = YandexPayButtonConfiguration(theme: theme)
-
-        let button = YandexPaySDKApi.instance.createButton(configuration: configuration, delegate: self)
-        return button
-    }()
+//    private lazy var yaPayButton: YandexPayButton = {
+//            // Укажите тему для кнопки
+//        let theme: YandexPayButtonTheme
+//        if #available(iOS 13.0, *) {
+//                // Параметр `dynamic` позволяет указать, нужно ли кнопке
+//                // менять свою цветовую палитру вместе со сменой системной темы
+//            theme = YandexPayButtonTheme(appearance: .dark, dynamic: true)
+//        } else {
+//            theme = YandexPayButtonTheme(appearance: .dark)
+//        }
+//
+//            // Инициализируйте конфигурацию
+//        let configuration = YandexPayButtonConfiguration(theme: theme)
+//
+//        let button = YandexPaySDKApi.instance.createButton(configuration: configuration, delegate: self)
+//        return button
+//    }()
     
     private var supportedPaymentNetworks: [PKPaymentNetwork] {
         get {
@@ -254,12 +254,12 @@ public class TipsViewController: BasePaymentViewController, UICollectionViewDele
     
     private func prepareUI() {
 
-        if CloudtipsSDK.yandexPayAppId != nil {
-            yandexPayButtonContainerView.addSubview(yaPayButton)
-            yaPayButton.snp.makeConstraints {
-                $0.edges.equalToSuperview()
-            }
-        }
+//        if CloudtipsSDK.yandexPayAppId != nil {
+//            yandexPayButtonContainerView.addSubview(yaPayButton)
+//            yaPayButton.snp.makeConstraints {
+//                $0.edges.equalToSuperview()
+//            }
+//        }
 
         profileImageView.layer.cornerRadius = self.profileImageView.frame.height/2
         profileImageView.layer.masksToBounds = true
@@ -735,122 +735,122 @@ extension TipsViewController: PKPaymentAuthorizationViewControllerDelegate {
 
 // MARK: - YandexPayButtonDelegate
 
-extension TipsViewController: YandexPayButtonDelegate {
-
-    public func yandexPayButton(_ button: YandexPayButton, didCompletePaymentWithResult result: YPPaymentResult) {
-        switch result {
-        case .succeeded(let paymentInfo):
-                // Payment was complete successfuly
-            //showAlertMessage(title: "Success!", message: "\(paymentInfo)")
-            self.yandexPayProcess(paymentInfo.paymentToken)
-        case .failed(let paymentError):
-                // An error occured while processing payment (e.g. validation error)
-            showAlertMessage(title: "Error!", message: "\(paymentError)")
-        case .cancelled:
-                // Payment window was dismissed by user
-            break
-            //showAlertMessage(title: "Cancelled!", message: "Payment has been cancelled by the user.")
-        @unknown default:
-            return
-        }
-    }
-
-    private func yandexPayProcess(_ token: String) {
-
-        if let layoutId = self.configuration.layout?.layoutId,
-           let decodedData = Data(base64Encoded: token),
-           let decodedToken = String(data: decodedData, encoding: .utf8) {
-
-            let paymentData = PaymentData.init(
-                layoutId: layoutId,
-                amount: self.amount,
-                comment: self.commentTextField.text,
-                amountPayerFee: self.amountPayerFee,
-                feeFromPayer: self.feeFromPayerSwitch.isOn
-            )
-
-            self.auth(with: paymentData, cryptogram: decodedToken, captchaToken: "") { (response, error) in
-
-                self.hideProgress()
-                if let response = response {
-                    if response.statusCode == .need3ds, let acsUrl = response.acsUrl, let md = response.md, let paReq = response.paReq {
-                        self.showThreeDs(with: acsUrl, md: md, paReq: paReq)
-                    } else if response.statusCode == .success {
-                        self.onPaymentSucceeded()
-                    } else if response.statusCode == .failure {
-                        let ctError = CloudtipsError.init(message: response.message ?? "Ошибка")
-                        self.onPaymentFailed(with: ctError)
-                    }
-                } else {
-                    let ctError = CloudtipsError.init(message: error?.localizedDescription ?? "Ошибка")
-                    self.onPaymentFailed(with: ctError)
-                }
-
-//                if response?.statusCode == .success {
-//                    self.paymentError = nil
-//                    self.onPaymentSucceeded()
+//extension TipsViewController: YandexPayButtonDelegate {
+//
+//    public func yandexPayButton(_ button: YandexPayButton, didCompletePaymentWithResult result: YPPaymentResult) {
+//        switch result {
+//        case .succeeded(let paymentInfo):
+//                // Payment was complete successfuly
+//            //showAlertMessage(title: "Success!", message: "\(paymentInfo)")
+//            self.yandexPayProcess(paymentInfo.paymentToken)
+//        case .failed(let paymentError):
+//                // An error occured while processing payment (e.g. validation error)
+//            showAlertMessage(title: "Error!", message: "\(paymentError)")
+//        case .cancelled:
+//                // Payment window was dismissed by user
+//            break
+//            //showAlertMessage(title: "Cancelled!", message: "Payment has been cancelled by the user.")
+//        @unknown default:
+//            return
+//        }
+//    }
+//
+//    private func yandexPayProcess(_ token: String) {
+//
+//        if let layoutId = self.configuration.layout?.layoutId,
+//           let decodedData = Data(base64Encoded: token),
+//           let decodedToken = String(data: decodedData, encoding: .utf8) {
+//
+//            let paymentData = PaymentData.init(
+//                layoutId: layoutId,
+//                amount: self.amount,
+//                comment: self.commentTextField.text,
+//                amountPayerFee: self.amountPayerFee,
+//                feeFromPayer: self.feeFromPayerSwitch.isOn
+//            )
+//
+//            self.auth(with: paymentData, cryptogram: decodedToken, captchaToken: "") { (response, error) in
+//
+//                self.hideProgress()
+//                if let response = response {
+//                    if response.statusCode == .need3ds, let acsUrl = response.acsUrl, let md = response.md, let paReq = response.paReq {
+//                        self.showThreeDs(with: acsUrl, md: md, paReq: paReq)
+//                    } else if response.statusCode == .success {
+//                        self.onPaymentSucceeded()
+//                    } else if response.statusCode == .failure {
+//                        let ctError = CloudtipsError.init(message: response.message ?? "Ошибка")
+//                        self.onPaymentFailed(with: ctError)
+//                    }
 //                } else {
-//                    let error = CloudtipsError.init(message: response?.message ?? error?.localizedDescription ?? "")
-//                    self.paymentError = error
-//                    self.onPaymentFailed(with: error)
+//                    let ctError = CloudtipsError.init(message: error?.localizedDescription ?? "Ошибка")
+//                    self.onPaymentFailed(with: ctError)
 //                }
-            }
-        }
-
-    }
-
-    public func yandexPayButtonDidRequestViewControllerForPresentation(_ button: YandexPayButton) -> UIViewController? {
-            // Return current UIViewController as controller for presentation
-        return self
-    }
-
-    public func yandexPayButtonDidRequestPaymentSheet(_ button: YandexPayButton) -> YPPaymentSheet? {
-
-        guard let gatewayMerchantId = publicIdResponse?.publicId else { return nil }
-
-        if let amountString = self.amountTextField.text,
-           let amount = NumberFormatter.currencyNumber(from: amountString),
-           validateAmount(amount),
-           validateFields() {
-
-            self.amount = amount
-
-            let amountForPay = feeFromPayerSwitch.isOn ? amountPayerFee : amount
-
-            return YPPaymentSheet(
-                countryCode: .ru,
-                currencyCode: .rub,
-                merchant: YPMerchant(
-                    id: "1193a702-d3c0-4637-a7c0-2ac95b73ee29",
-                    name: "cloudpayments",
-                    url: "https://cloudtips.ru"
-                ),
-                order: YPOrder(
-                    id: "ORDER-ID",
-                    amount: amountForPay.stringValue
-                ),
-                paymentMethods: [
-                    .card(
-                        YPCardPaymentMethod(
-                            gateway: "cloudpayments",
-                            gatewayMerchantId: gatewayMerchantId, // api/payment/publicid
-                            allowedAuthMethods: [
-                                .panOnly
-                            ],
-                            allowedCardNetworks: [
-                                .mastercard,
-                                .visa,
-                                .mir
-                            ]
-                        )
-                    )
-                ]
-            )
-        } else {
-            return nil
-        }
-    }
-}
+//
+////                if response?.statusCode == .success {
+////                    self.paymentError = nil
+////                    self.onPaymentSucceeded()
+////                } else {
+////                    let error = CloudtipsError.init(message: response?.message ?? error?.localizedDescription ?? "")
+////                    self.paymentError = error
+////                    self.onPaymentFailed(with: error)
+////                }
+//            }
+//        }
+//
+//    }
+//
+//    public func yandexPayButtonDidRequestViewControllerForPresentation(_ button: YandexPayButton) -> UIViewController? {
+//            // Return current UIViewController as controller for presentation
+//        return self
+//    }
+//
+//    public func yandexPayButtonDidRequestPaymentSheet(_ button: YandexPayButton) -> YPPaymentSheet? {
+//
+//        guard let gatewayMerchantId = publicIdResponse?.publicId else { return nil }
+//
+//        if let amountString = self.amountTextField.text,
+//           let amount = NumberFormatter.currencyNumber(from: amountString),
+//           validateAmount(amount),
+//           validateFields() {
+//
+//            self.amount = amount
+//
+//            let amountForPay = feeFromPayerSwitch.isOn ? amountPayerFee : amount
+//
+//            return YPPaymentSheet(
+//                countryCode: .ru,
+//                currencyCode: .rub,
+//                merchant: YPMerchant(
+//                    id: "1193a702-d3c0-4637-a7c0-2ac95b73ee29",
+//                    name: "cloudpayments",
+//                    url: "https://cloudtips.ru"
+//                ),
+//                order: YPOrder(
+//                    id: "ORDER-ID",
+//                    amount: amountForPay.stringValue
+//                ),
+//                paymentMethods: [
+//                    .card(
+//                        YPCardPaymentMethod(
+//                            gateway: "cloudpayments",
+//                            gatewayMerchantId: gatewayMerchantId, // api/payment/publicid
+//                            allowedAuthMethods: [
+//                                .panOnly
+//                            ],
+//                            allowedCardNetworks: [
+//                                .mastercard,
+//                                .visa,
+//                                .mir
+//                            ]
+//                        )
+//                    )
+//                ]
+//            )
+//        } else {
+//            return nil
+//        }
+//    }
+//}
 
     // MARK: - Helpers
 
