@@ -9,6 +9,7 @@ import Foundation
 import WebKit
 import ReCaptcha
 import Cloudpayments
+import UIKit
 
 public class BasePaymentViewController: BaseViewController, PaymentDelegate {
 
